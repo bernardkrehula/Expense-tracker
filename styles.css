@@ -6,14 +6,56 @@ html {
     padding: 0;
     box-sizing: border-box;
 }
-.main {
-    display: block;
-    margin: 0 auto;
-    text-align: center;
-    width: 350px;
+body {
+    background-color: rgb(240, 240, 240);
 }
-.income-expense
+.main {
+    margin: 150px auto;
+    width: 350px;
+    font-size: 1.7rem;
+}
+.main h1 {
+    margin-bottom: 30px;
+}
+.main h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+.income-expense {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    height: 80px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.income {
+    width: 49%;
+    padding-top: 15px;
+}
+.expense {
+    width: 49%;
+    padding-top: 15px;
+}
+.income-expense hr{
+    margin: 0 auto;
+    border: none;
+    border-left: 1px solid hsla(200, 10%, 50%,100);
+    width: 1px;
+    margin: 10px auto; 
+}
+.main hr {
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+.main input {
+    width: 100%;
+    padding: 8px 6px;
+    font-size: 1.6rem;
+    margin: 10px 0;
+}
 .btn {
+    display: block;
     cursor: pointer;
     width: 100%;
     padding: 10px;
