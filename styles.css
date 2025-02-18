@@ -1,0 +1,24 @@
+html {
+    font-size: 62.5%;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.main {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: 350px;
+}
+.income-expense
+.btn {
+    cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.6rem;
+    border: none;
+    color: white;
+    background-color: rgb(161, 120, 255);
+}
