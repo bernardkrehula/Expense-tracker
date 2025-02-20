@@ -50,19 +50,20 @@ addBtn.addEventListener('click', () => {
 })
 
 function valueCreator() {
-    let id = text;
-    value = amount;
-    const getId = () => { return id };
-    const getValue = () => value;
-    return { getId, getValue, id, value}
-
+    if(text != undefined && amount != 0) {
+        let id = text;
+        value = amount;
+        const getId = () => { return id };
+        const getValue = () => value;
+        return { getId, getValue, id, value}
+    }
 }
 function refreshBalance() {
     balance = document.querySelector('.balance');
     balance.innerHTML = `$${manager.sumHistory().toFixed(2)}`;
 }
 function createHistoryExpense(id) {
-    const html = `<div class="history-list"><button id="${id}">X</button><div class="history-content">$${inputValue.value}</div></div>`
+    const html = `<div class="history-list"><button id="${id}">X</button><div class="history-content">$${inputValue.value} ${inputText.value}</div></div>`
     history = document.querySelector('.history');
     history.insertAdjacentHTML('afterbegin', html)
    
@@ -72,6 +73,7 @@ function createHistoryExpense(id) {
             manager.removeObject(e.target.id);
             let div = e.target.closest('div');
             history.removeChild(div);
+            balance.innerHTML = `$${manager.sumHistory().toFixed(2)}`
         })
     }
     console.log(getBtnId())
