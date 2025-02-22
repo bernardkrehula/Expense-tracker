@@ -20,7 +20,25 @@ function manageArray() {
     }
     const sumHistory = () => {
         const sumArray = array.reduce((accumulator, sum) => {
-            return accumulator -(- sum.value);
+            return accumulator + Number(sum.value);
+        }, 0)
+        return sumArray;
+    }
+    const sumIncome = () => {
+        const sumArray = array.reduce((accumulator, sum) => {
+            if(sum.value > 0) {
+                return accumulator + Number(sum.value);
+            }
+            return accumulator;
+        }, 0)
+        return sumArray;
+    }
+    const sumExpense = () => {
+        const sumArray = array.reduce((accumulator, sum) => {
+            if(sum.value < 0) {
+                return accumulator + Number(sum.value);
+            }
+            return accumulator;
         }, 0)
         return sumArray;
     }
@@ -28,30 +46,12 @@ function manageArray() {
         return array;
     }
 
-    return { addObject, getArrayObjects, sumHistory, removeObject }
+    return { addObject, getArrayObjects, sumHistory, removeObject, sumIncome, sumExpense }
 }
 const manager = manageArray();
 refreshBalance();
-
-inputText.addEventListener('input', (e) => {
-    text = e.target.value;
-})
-inputValue.addEventListener('input', (e) => {
-    amount = e.target.value; 
-})
-
-addBtn.addEventListener('click', () => {
-    const newObject = transactionCreator();
-    manager.addObject(newObject);
-    createHistoryExpense(newObject.getId())
-    if(amount > 0) {};
-    if(amount < 0) {};
-    inputValue.value = 0;
-    inputText.value = '';
-    refreshBalance()
-    removeExpense()
-})
-
+Income()
+Expense()
 function transactionCreator() {
     let id = crypto.randomUUID();
     let value = amount;
@@ -60,16 +60,18 @@ function transactionCreator() {
     return { getId, getValue, id, value}
    
 }
-function addExpense() {
-    let id = crypto.randomUUID();
-    let value = amount;
-    const getId = () => { return id };
-    const getValue = () => value;
-    return { getId, getValue, id, value}
+function Income() {
+    income.innerHTML = manager.sumIncome().toFixed(2);
+    income.addEventListener('click', () => {
+        income.style.color = 'green';
+    })
 }
-//Staviti na cijelu listu event listener
-//Income na click zelen
-//Expense na click crven
+function Expense() {
+    expense.innerHTML = manager.sumExpense().toFixed(2);
+    expense.addEventListener('click', () => {
+        expense.style.color = 'red';
+    })
+}
 function refreshBalance() {
     balance.innerHTML = `$${manager.sumHistory().toFixed(2)}`;
 }
@@ -78,12 +80,31 @@ function createHistoryExpense(id) {
     history = document.querySelector('.history');
     history.insertAdjacentHTML('afterbegin', html)
 }
+
+inputText.addEventListener('input', (e) => {
+    text = e.target.value;
+})
+inputValue.addEventListener('input', (e) => {
+    amount = e.target.value; 
+})
+addBtn.addEventListener('click', () => {
+    const newObject = transactionCreator();
+    manager.addObject(newObject);
+    createHistoryExpense(newObject.getId())
+    inputValue.value = 0;
+    inputText.value = '';
+    refreshBalance()
+    removeExpense()
+    Income()
+    Expense()
+})
 function removeExpense() {
     history.addEventListener('click', (e) => {
         manager.removeObject(e.target.id);
         let div = e.target.closest('div');
-        console.log(div)
         history.removeChild(div);
+        Income()
+        Expense()
         refreshBalance()
     })
 }
