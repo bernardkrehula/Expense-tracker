@@ -7,8 +7,7 @@ let income = document.querySelector('.income h4');
 let expense = document.querySelector('.expense h4')
 let text;
 let amount;
-// Napravi 2 kreatorske funkcije
-//expenseCreator incomeCreator
+
 function manageArray() {
     let array = [];
     const addObject = (object) => {
@@ -20,14 +19,14 @@ function manageArray() {
     }
     const sumHistory = () => {
         const sumArray = array.reduce((accumulator, sum) => {
-            return accumulator + Number(sum.value);
+            return accumulator + Number(sum.getValue());
         }, 0)
         return sumArray;
     }
     const sumIncome = () => {
         const sumArray = array.reduce((accumulator, sum) => {
-            if(sum.value > 0) {
-                return accumulator + Number(sum.value);
+            if(sum.getValue() > 0) {
+                return accumulator + Number(sum.getValue());
             }
             return accumulator;
         }, 0)
@@ -35,8 +34,8 @@ function manageArray() {
     }
     const sumExpense = () => {
         const sumArray = array.reduce((accumulator, sum) => {
-            if(sum.value < 0) {
-                return accumulator + Number(sum.value);
+            if(sum.getValue() < 0) {
+                return accumulator + Number(sum.getValue());
             }
             return accumulator;
         }, 0)
@@ -57,7 +56,7 @@ function transactionCreator() {
     let value = amount;
     const getId = () => { return id };
     const getValue = () => value;
-    return { getId, getValue, id, value}
+    return { getId, getValue }
    
 }
 function Income() {
