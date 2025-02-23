@@ -87,15 +87,17 @@ inputValue.addEventListener('input', (e) => {
     amount = e.target.value; 
 })
 addBtn.addEventListener('click', () => {
-    const newObject = transactionCreator();
-    manager.addObject(newObject);
-    createHistoryExpense(newObject.getId())
+    if(inputValue.value != 0 && inputText.value != '') {
+        const newObject = transactionCreator();
+        createHistoryExpense(newObject.getId())
+        manager.addObject(newObject);
+        refreshBalance()
+        removeExpense()
+        Income()
+        Expense()
+    }
     inputValue.value = 0;
     inputText.value = '';
-    refreshBalance()
-    removeExpense()
-    Income()
-    Expense()
 })
 function removeExpense() {
     history.addEventListener('click', (e) => {
