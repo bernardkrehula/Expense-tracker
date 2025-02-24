@@ -14,7 +14,7 @@ function manageArray() {
         array.push(object);
     }
     const removeObject = (id) => {
-        array = array.filter(objekt => objekt.id != id);
+        array = array.filter(objekt => objekt.getId() != id);
         return array;
     }
     const sumHistory = () => {
@@ -49,8 +49,7 @@ function manageArray() {
 }
 const manager = manageArray();
 refreshBalance();
-Income()
-Expense()
+refreshIncomeExpenseContent();
 function transactionCreator() {
     let id = crypto.randomUUID();
     let value = amount;
@@ -59,18 +58,14 @@ function transactionCreator() {
     return { getId, getValue }
    
 }
-function Income() {
+function refreshIncomeExpenseContent() {
     income.innerHTML = manager.sumIncome().toFixed(2);
-    income.addEventListener('click', () => {
-        income.style.color = 'green';
-    })
-}
-function Expense() {
     expense.innerHTML = manager.sumExpense().toFixed(2);
-    expense.addEventListener('click', () => {
-        expense.style.color = 'red';
-    })
 }
+
+//Stavi event listener na parentElement income-expense 
+//Nazvati imena funckija logicnim imenima da se zna radnja funkcije
+
 function refreshBalance() {
     balance.innerHTML = `$${manager.sumHistory().toFixed(2)}`;
 }
@@ -92,20 +87,24 @@ addBtn.addEventListener('click', () => {
         createHistoryExpense(newObject.getId())
         manager.addObject(newObject);
         refreshBalance()
-        removeExpense()
-        Income()
-        Expense()
+        refreshIncomeExpenseContent()
     }
     inputValue.value = 0;
     inputText.value = '';
 })
-function removeExpense() {
-    history.addEventListener('click', (e) => {
-        manager.removeObject(e.target.id);
-        let div = e.target.closest('div');
-        history.removeChild(div);
-        Income()
-        Expense()
-        refreshBalance()
-    })
-}
+history.addEventListener('click', (e) => {
+    manager.removeObject(e.target.id);
+    let div = e.target.closest('div');
+    history.removeChild(div);
+    manager.removeObject();
+    refreshBalance();
+    refreshIncomeExpenseContent();
+})
+
+income.addEventListener('click', () => {
+    income.style.color = 'green';
+})
+
+expense.addEventListener('click', () => {
+    expense.style.color = 'red';
+})
